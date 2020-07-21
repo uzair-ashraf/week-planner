@@ -1,0 +1,24 @@
+{
+  "name": "week-planner",
+  "version": "1.0.0",
+  "description": "A typescript object oriented web application to plan to your week",
+  "main": "index.js",
+  "scripts": {
+    "start": "tsc",
+    "dev": "tsc -w"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/uzair-ashraf/week-planner.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/uzair-ashraf/week-planner/issues"
+  },
+  "homepage": "https://github.com/uzair-ashraf/week-planner#readme",
+  "devDependencies": {
+    "typescript": "^3.9.7"
+  }
+}
