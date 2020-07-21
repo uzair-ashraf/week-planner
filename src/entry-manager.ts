@@ -1,16 +1,42 @@
 class EntryManager {
   modalContainer: HTMLElement
   addEntryModal: HTMLElement
+  addEntryForm: HTMLElement
   addEntryButton: HTMLElement
   isShowingModal: boolean
-  constructor(modalContainer: HTMLElement, addEntryModal: HTMLElement, addEntryButton: HTMLElement) {
+  addNewEntry: Function
+  constructor(
+    modalContainer: HTMLElement,
+    addEntryModal: HTMLElement,
+    addEntryButton: HTMLElement,
+    addEntryForm: HTMLElement
+    ) {
     this.modalContainer = modalContainer
     this.addEntryModal = addEntryModal
     this.addEntryButton = addEntryButton
+    this.addEntryForm = addEntryForm
   }
   public setEventListeners(): void {
     this.addEntryButton.addEventListener('click', this.showEntryModal.bind(this))
     this.modalContainer.addEventListener('click', this.cancelAllEntries.bind(this))
+    this.addEntryForm.addEventListener('submit', this.handleNewEntry.bind(this))
+  }
+  public setCallbacks(addNewEntry: Function): void {
+    this.addNewEntry = addNewEntry
+  }
+  private handleNewEntry(event: SubmitEvent): void {
+    event.preventDefault()
+    const formData:FormData = new FormData(event.target)
+    const day: FormDataEntryValue = formData.get('day')
+    const time: FormDataEntryValue = formData.get('time')
+    const description: FormDataEntryValue = formData.get('description')
+    if(!day || !time || !description) return
+    const newEntry: Entry = {
+      day,
+      time,
+      description
+    }
+    this.addNewEntry(newEntry)
   }
   private showEntryModal(): void {
     this.showModalShadow()

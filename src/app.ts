@@ -18,6 +18,11 @@ class App {
   }
   private setCallbacks():void {
     this.dayManager.setCallbacks(this.setCurrentDay.bind(this))
+    this.entryManager.setCallbacks(this.addNewEntry.bind(this))
+  }
+  private addNewEntry(entry: object): void {
+    this.data.push(entry)
+    console.log(entry)
   }
   private setEventListeners(): void {
     this.dayManager.setEventListeners()
