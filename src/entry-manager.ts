@@ -3,18 +3,24 @@ class EntryManager {
   addEntryModal: HTMLElement
   addEntryForm: HTMLElement
   addEntryButton: HTMLElement
+  updateEntryModal: HTMLElement
+  updateEntryForm: HTMLElement
   isShowingModal: boolean
   addNewEntry: Function
   constructor(
     modalContainer: HTMLElement,
     addEntryModal: HTMLElement,
     addEntryButton: HTMLElement,
-    addEntryForm: HTMLElement
+    addEntryForm: HTMLElement,
+    updateEntryModal: HTMLElement,
+    updateEntryForm: HTMLElement
     ) {
     this.modalContainer = modalContainer
     this.addEntryModal = addEntryModal
     this.addEntryButton = addEntryButton
     this.addEntryForm = addEntryForm
+    this.updateEntryModal = updateEntryModal
+    this.updateEntryForm = updateEntryForm
   }
   public setEventListeners(): void {
     this.addEntryButton.addEventListener('click', this.showEntryModal.bind(this))
@@ -46,7 +52,14 @@ class EntryManager {
   }
   private hideEntryModal(): void {
     this.hideModalShadow()
-    this.addEntryModal.classList.remove('hidden')
+    this.addEntryModal.classList.add('hidden')
+  }
+  public showUpdateModal(): void {
+    this.showModalShadow()
+    this.updateEntryModal.classList.remove('hidden')
+  }
+  private hideUpdateModal(): void {
+    this.updateEntryModal.classList.add('hidden')
   }
   private showModalShadow(): void {
     this.modalContainer.classList.remove('hidden')

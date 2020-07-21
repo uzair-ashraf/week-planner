@@ -1,12 +1,17 @@
 class EventsManager {
   tableContent: HTMLElement
+  setUpdating: Function
   constructor(tableContent: HTMLElement) {
     this.tableContent = tableContent
+    this.setUpdating = null
   }
   public addNewEntry(entry: Entry): void {
     const row: HTMLTableRowElement = this.generateNewRow(entry)
     entry.row = row
     this.tableContent.appendChild(row)
+  }
+  public setCallbacks(setUpdating: Function) {
+    this.setUpdating = setUpdating
   }
   private generateNewRow(entry: Entry): HTMLTableRowElement {
     const row: HTMLTableRowElement = document.createElement('tr')
@@ -24,7 +29,7 @@ class EventsManager {
     descriptionCell.innerText = entry.description
     updateButton.textContent = 'Update'
     deleteButton.textContent = 'Delete'
-
+    updateButton.addEventListener('click', () => this.setUpdating(row))
     actionsCell.append(updateButton, deleteButton)
     row.append(timeCell, descriptionCell, actionsCell)
     return row
