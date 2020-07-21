@@ -70,3 +70,6 @@ tr:nth-child(even) {
 .event-description {
   word-break: break-all;
 }
+.event-day {
+  text-transform: capitalize;
+}
