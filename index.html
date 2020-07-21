@@ -4,11 +4,54 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Week Planner</title>
+  <title>Weekly Planner</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <h1>Hello world!</h1>
+  <header>
+    <h1>Weekly Planner</h1>
+  </header>
+  <div class="container">
+    <div class="day-container">
+      <div data-day="sunday">Sunday</div>
+      <div data-day="monday">Monday</div>
+      <div data-day="tuesday">Tuesday</div>
+      <div data-day="wednesday">Wednesday</div>
+      <div data-day="thursday">Thursday</div>
+      <div data-day="friday">Friday</div>
+      <div data-day="saturday">Saturday</div>
+    </div>
+    <div class="action-container">
+      <button class="add-entry-button">Add Entry</button>
+    </div>
+    <div class="events-heading">
+      <h1>Scheduled Events for <span class="event-day">Monday</span></h1>
+    </div>
+    <div class="events-table-container">
+      <table class="events-table">
+        <thead>
+          <tr>
+            <th colspan="1">Time</th>
+            <th colspan="1">Description</th>
+            <th colspan="1">Actions</th>
+          </tr>
+        </thead>
+        <tbody class="events-table-content">
+          <tr>
+            <td class="event-time">8:00</td>
+            <td class="event-description">
+             Pickup Jeffery
+            </td>
+            <td class="actions">
+              <button>Update</button>
+              <button>Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
   <script src="js/main.js"></script>
 </body>
 </html>

@@ -1,0 +1,72 @@
+body {
+  font-family: 'Roboto', sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+header {
+  text-align: center;
+}
+button {
+  border: none;
+  font-family: 'Roboto', sans-serif;
+  border: 2px solid slategray;
+  border-radius: 8%;
+}
+button:hover,.day-container > div[data-day]:hover {
+  transition-duration: 500ms;
+  cursor: pointer;
+  background-color: slategray;
+  color: white;
+}
+table {
+  border-collapse: collapse;
+}
+td, th {
+  border: 1px solid #dddddd;
+  text-align: center;
+  padding: 8px;
+}
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+.day-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  margin: 2rem .3rem;
+}
+.day-container > div[data-day]{
+  height: 180px;
+  width: 180px;
+  border: 2px solid rgba(112, 128, 144, 0.219);
+  border-radius: 5%;
+  box-shadow: 5px 10px rgba(112, 128, 144, 0.062);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bolder;
+  font-size: 1.6rem;
+  margin: 1.2rem;
+}
+
+.action-container {
+  text-align: center;
+}
+
+.add-entry-button {
+  padding: .6rem 1.2rem;
+  font-weight: bolder;
+  font-size: 1.4rem;
+}
+
+.events-heading {
+  text-align: center;
+}
+.events-table {
+  min-width: 90%;
+  margin: 1.2rem auto;
+}
+.event-description {
+  word-break: break-all;
+}
