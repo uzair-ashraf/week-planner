@@ -6,9 +6,10 @@ interface SubmitEvent {
   preventDefault: Function
 }
 interface Entry {
-  day: FormDataEntryValue
-  time: FormDataEntryValue
-  description: FormDataEntryValue
+  day: any
+  time: any
+  description: any
+  row?: HTMLTableRowElement
 }
 interface Modals {
   [key: string]: HTMLElement

@@ -1,7 +1,7 @@
 {
   "name": "week-planner",
   "version": "1.0.0",
-  "description": "A typescript object oriented web application to plan to your week",
+  "description": "A typescript object oriented web application to plan your week",
   "main": "index.js",
   "scripts": {
     "start": "tsc",

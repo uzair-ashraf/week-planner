@@ -8,5 +8,8 @@ const entryManager: EntryManager = new EntryManager(
   document.querySelector('.add-entry-button'),
   document.querySelector('.add-entry-form')
 )
-const app: App = new App(dayManager, entryManager)
+const eventsManager: EventsManager = new EventsManager(
+  document.querySelector('.events-table-content')
+)
+const app: App = new App(dayManager, entryManager, eventsManager)
 app.start()

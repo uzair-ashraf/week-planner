@@ -3,10 +3,16 @@ class App {
   dayManager: DayManager
   currentDay: string
   entryManager: EntryManager
-  constructor(dayManager: DayManager, entryManager: EntryManager) {
+  eventsManager: EventsManager
+  constructor(
+    dayManager: DayManager,
+    entryManager: EntryManager,
+    eventsManager: EventsManager
+  ) {
     this.data = []
     this.dayManager = dayManager
     this.entryManager = entryManager
+    this.eventsManager = eventsManager
     this.currentDay = 'monday'
   }
   private getStorage(): void {
@@ -20,9 +26,9 @@ class App {
     this.dayManager.setCallbacks(this.setCurrentDay.bind(this))
     this.entryManager.setCallbacks(this.addNewEntry.bind(this))
   }
-  private addNewEntry(entry: object): void {
+  private addNewEntry(entry: Entry): void {
+    this.eventsManager.addNewEntry(entry)
     this.data.push(entry)
-    console.log(entry)
   }
   private setEventListeners(): void {
     this.dayManager.setEventListeners()

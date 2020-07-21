@@ -37,13 +37,22 @@ class EntryManager {
       description
     }
     this.addNewEntry(newEntry)
+    this.hideEntryModal()
+    event.target.reset()
   }
   private showEntryModal(): void {
     this.showModalShadow()
     this.addEntryModal.classList.remove('hidden')
   }
+  private hideEntryModal(): void {
+    this.hideModalShadow()
+    this.addEntryModal.classList.remove('hidden')
+  }
   private showModalShadow(): void {
     this.modalContainer.classList.remove('hidden')
+  }
+  private hideModalShadow(): void {
+    this.modalContainer.classList.add('hidden')
   }
   private cancelAllEntries(event: ClickEvent): void {
     if(!event.target.classList.contains('modal-container')) return
