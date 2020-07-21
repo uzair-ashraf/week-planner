@@ -2,9 +2,11 @@ class App {
   data: Array<Object>
   dayManager: DayManager
   currentDay: string
-  constructor(dayManager: DayManager) {
+  entryManager: EntryManager
+  constructor(dayManager: DayManager, entryManager: EntryManager) {
     this.data = []
     this.dayManager = dayManager
+    this.entryManager = entryManager
     this.currentDay = 'monday'
   }
   private getStorage(): void {
@@ -19,7 +21,9 @@ class App {
   }
   private setEventListeners(): void {
     this.dayManager.setEventListeners()
+    this.entryManager.setEventListeners()
   }
+
   public start():void {
     this.getStorage()
     this.setCallbacks()
