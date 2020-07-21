@@ -17,7 +17,7 @@ class DayManager {
     this.setCurrentDay(day)
     this.setDayInHeading(day)
   }
-  private setDayInHeading(day: string) {
+  private setDayInHeading(day: string): void {
     this.dayInHeading.textContent = day
   }
   public setEventListeners(): void {

@@ -73,3 +73,35 @@ tr:nth-child(even) {
 .event-day {
   text-transform: capitalize;
 }
+.modal-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.349);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.modal {
+  box-sizing: border-box;
+  width: 600px;
+  border: 2px solid red;
+  text-align: center;
+  padding: 2rem;
+  border: 2px solid slategray;
+  background-color: white;
+}
+.input-container {
+  display: flex;
+  justify-content: center;
+  justify-content: space-evenly;
+  margin: 1.2rem;
+}
+.input-container > * {
+  font-size: 1.2rem;
+}
+.hidden {
+  display: none;
+}

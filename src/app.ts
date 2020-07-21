@@ -11,7 +11,7 @@ class App {
     const data: string = localStorage.getItem('data')
     this.data = JSON.parse(data) || []
   }
-  private setCurrentDay(day: string) {
+  private setCurrentDay(day: string): void {
     this.currentDay = day
   }
   private setCallbacks():void {
