@@ -1,2 +1,2 @@
 # week-planner
-A typescript object oriented web application to plan to your week
+A typescript object oriented web application to plan your week
