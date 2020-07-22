@@ -147,7 +147,6 @@ class EntryManager {
       !event.target.classList.contains('modal-container') &&
       event.target.className !== 'cancel-delete'
     ) return
-    console.log('hit')
     if(!this.modalContainer.classList.contains('hidden')) {
       this.modalContainer.classList.add('hidden')
     }
