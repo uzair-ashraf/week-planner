@@ -9,7 +9,9 @@ class EntryManager {
   resetUpdating: Function
   addNewEntry: Function
   getUpdatingEntry: Function
-  updateEntry: Function
+  updateEntryInEvent: Function
+  getCurrentDay: Function
+  updateEntryInData: Function
   constructor(
     modalContainer: HTMLElement,
     addEntryModal: HTMLElement,
@@ -27,7 +29,9 @@ class EntryManager {
     this.addNewEntry = null
     this.resetUpdating = null
     this.getUpdatingEntry = null
-    this.updateEntry = null
+    this.updateEntryInEvent = null
+    this.getCurrentDay = null
+    this.updateEntryInData = null
   }
   public setEventListeners(): void {
     this.addEntryButton.addEventListener('click', this.showEntryModal.bind(this))
@@ -39,16 +43,19 @@ class EntryManager {
     addNewEntry: Function,
     resetUpdating: Function,
     getUpdatingEntry: Function,
-    updateEntry: Function
+    updateEntryInEvent: Function,
+    getCurrentDay: Function,
+    updateEntryInData: Function
   ): void {
     this.addNewEntry = addNewEntry
     this.resetUpdating = resetUpdating
     this.getUpdatingEntry = getUpdatingEntry
-    this.updateEntry = updateEntry
+    this.updateEntryInEvent = updateEntryInEvent
+    this.getCurrentDay = getCurrentDay
+    this.updateEntryInData = updateEntryInData
   }
   public fillUpdateModal(entry: Entry): void {
     const { day, time, description } = entry
-    // const elements: [HTMLSelectElement, HTMLSelectElement, HTMLButtonElement ,HTMLTextAreaElement]: this.updateEntryForm
     const [daySelect, timeSelect, ,textArea] = this.updateEntryForm
     daySelect.value = day
     timeSelect.value = time
@@ -83,10 +90,9 @@ class EntryManager {
       time,
       description
     }
-    this.updateEntry(entry, newEntry)
+    this.updateEntryInData(newEntry)
     this.hideUpdateModal()
     event.target.reset()
-    this.resetUpdating()
   }
   private showEntryModal(): void {
     this.showModalShadow()

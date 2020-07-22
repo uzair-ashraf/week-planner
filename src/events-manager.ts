@@ -24,13 +24,10 @@ class EventsManager {
       this.tableContent.appendChild(row)
     }
   }
-  public updateEntry(entry: Entry, newEntry: Entry): void {
-    if(newEntry.day !== this.getCurrentDay()) return
-    entry.time = newEntry.time
-    entry.description = newEntry.description
+  public updateEntryInEvent(entry: Entry): void {
     const [timeCell, descriptionCell] = entry.row.children
-    timeCell.textContent = newEntry.time
-    descriptionCell.textContent = newEntry.description
+    timeCell.textContent = entry.time
+    descriptionCell.textContent = entry.description
   }
   public setCallbacks(
     setUpdating: Function,

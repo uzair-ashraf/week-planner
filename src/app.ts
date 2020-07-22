@@ -45,7 +45,9 @@ class App {
       this.addNewEntry.bind(this),
       this.resetUpdating.bind(this),
       this.getUpdatingEntry.bind(this),
-      this.eventsManager.updateEntry.bind(this)
+      this.eventsManager.updateEntryInEvent.bind(this),
+      this.getCurrentDay.bind(this),
+      this.updateEntryInData.bind(this)
     )
     this.eventsManager.setCallbacks(
       this.setUpdating.bind(this),
@@ -73,6 +75,19 @@ class App {
   private getUpdatingEntry(): Entry {
     return this.updating
   }
+  private updateEntryInData(newEntry: Entry): void {
+    if(newEntry.day !== this.currentDay) {
+      const entryIndex: number = this.data[this.currentDay].findIndex(entry => entry.row === this.updating.row)
+      this.data[this.currentDay].splice(entryIndex, 1)
+      this.data[newEntry.day].push(newEntry)
+      this.eventsManager.updateEvents()
+    } else {
+      this.updating.time = newEntry.time
+      this.updating.description = newEntry.description
+      this.eventsManager.updateEntryInEvent(this.updating)
+      this.resetUpdating()
+    }
+  }
   private getCurrentEvents(): Entry[] {
     return this.data[this.currentDay]
   }
@@ -80,6 +95,5 @@ class App {
     this.getStorage()
     this.setCallbacks()
     this.setEventListeners()
-    console.log('meow')
   }
 }
