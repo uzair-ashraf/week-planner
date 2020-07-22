@@ -1,11 +1,13 @@
 class EventsManager {
   tableContent: HTMLElement
   setUpdating: Function
+  setDeleting: Funciton
   getCurrentDay: Function
   getCurrentEvents: Function
   constructor(tableContent: HTMLElement) {
     this.tableContent = tableContent
     this.setUpdating = null
+    this.setDeleting = null
     this.getCurrentDay = null
     this.getCurrentEvents = null
   }
@@ -29,12 +31,17 @@ class EventsManager {
     timeCell.textContent = entry.time
     descriptionCell.textContent = entry.description
   }
+  public deleteEntryInEvent(entry: Entry): void {
+    entry.row.remove()
+  }
   public setCallbacks(
     setUpdating: Function,
+    setDeleting: Function,
     getCurrentDay: Function,
     getCurrentEvents: Function
   ) {
     this.setUpdating = setUpdating
+    this.setDeleting = setDeleting
     this.getCurrentDay = getCurrentDay
     this.getCurrentEvents = getCurrentEvents
   }
@@ -55,6 +62,7 @@ class EventsManager {
     updateButton.textContent = 'Update'
     deleteButton.textContent = 'Delete'
     updateButton.addEventListener('click', () => this.setUpdating(row))
+    deleteButton.addEventListener('click', () => this.setDeleting(row))
     actionsCell.append(updateButton, deleteButton)
     row.append(timeCell, descriptionCell, actionsCell)
     return row

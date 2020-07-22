@@ -103,6 +103,18 @@ textarea {
 .input-container > * {
   font-size: 1.2rem;
 }
+.delete-action-container > button{
+  font-size: 1.2rem;
+  padding: .6rem 1.2rem;
+}
+.confirm-delete {
+  background-color: maroon;
+  color: white;
+}
+.cancel-delete {
+  background-color: teal;
+  color: white;
+}
 .hidden {
   display: none;
 }

@@ -8,7 +8,9 @@ const entryManager: EntryManager = new EntryManager(
   document.querySelector('.add-entry-button'),
   document.querySelector('.add-entry-form'),
   document.querySelector('.update-entry-modal'),
-  document.querySelector('.update-entry-form')
+  document.querySelector('.update-entry-form'),
+  document.querySelector('.delete-entry-modal'),
+  document.querySelector('.confirm-delete')
 )
 const eventsManager: EventsManager = new EventsManager(
   document.querySelector('.events-table-content')

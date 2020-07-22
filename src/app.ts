@@ -5,6 +5,7 @@ class App {
   entryManager: EntryManager
   eventsManager: EventsManager
   updating: Entry
+  deleting: Entry
   constructor(
     dayManager: DayManager,
     entryManager: EntryManager,
@@ -16,6 +17,7 @@ class App {
     this.eventsManager = eventsManager
     this.currentDay = 'monday'
     this.updating = null
+    this.deleting = null
   }
   private getStorage(): void {
     const data: string = localStorage.getItem('data')
@@ -47,10 +49,13 @@ class App {
       this.getUpdatingEntry.bind(this),
       this.eventsManager.updateEntryInEvent.bind(this),
       this.getCurrentDay.bind(this),
-      this.updateEntryInData.bind(this)
+      this.updateEntryInData.bind(this),
+      this.resetDeleting.bind(this),
+      this.deleteEntryInData.bind(this)
     )
     this.eventsManager.setCallbacks(
       this.setUpdating.bind(this),
+      this.setDeleting.bind(this),
       this.getCurrentDay.bind(this),
       this.getCurrentEvents.bind(this)
     )
@@ -69,8 +74,16 @@ class App {
     this.entryManager.fillUpdateModal(updatingEntry)
     this.entryManager.showUpdateModal()
   }
+  private setDeleting(row: HTMLTableRowElement): void {
+    const deletingEntry: Entry = this.data[this.currentDay].find(entry => entry.row === row)
+    this.deleting = deletingEntry
+    this.entryManager.showDeleteModal()
+  }
   private resetUpdating(): void {
     this.updating = null
+  }
+  private resetDeleting(): void {
+    this.deleting = null
   }
   private getUpdatingEntry(): Entry {
     return this.updating
@@ -87,6 +100,12 @@ class App {
       this.eventsManager.updateEntryInEvent(this.updating)
       this.resetUpdating()
     }
+  }
+  private deleteEntryInData() {
+    const entryIndex: number = this.data[this.currentDay].findIndex(entry => entry.row === this.deleting.row)
+    this.data[this.currentDay].splice(entryIndex, 1)
+    this.eventsManager.deleteEntryInEvent(this.deleting)
+    this.resetDeleting()
   }
   private getCurrentEvents(): Entry[] {
     return this.data[this.currentDay]

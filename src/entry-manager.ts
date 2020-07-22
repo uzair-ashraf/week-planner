@@ -5,20 +5,25 @@ class EntryManager {
   addEntryButton: HTMLButtonElement
   updateEntryModal: HTMLElement
   updateEntryForm: any
-  isShowingModal: boolean
+  deleteEntryModal: HTMLElement
+  confirmDeleteButton: HTMLButtonElement
   resetUpdating: Function
   addNewEntry: Function
   getUpdatingEntry: Function
   updateEntryInEvent: Function
   getCurrentDay: Function
   updateEntryInData: Function
+  resetDeleting: Function
+  deleteEntryInData: Function
   constructor(
     modalContainer: HTMLElement,
     addEntryModal: HTMLElement,
     addEntryButton: HTMLButtonElement,
     addEntryForm: HTMLFormElement,
     updateEntryModal: HTMLElement,
-    updateEntryForm: any
+    updateEntryForm: any,
+    deleteEntryModal: HTMLElement,
+    confirmDeleteButton: HTMLButtonElement,
     ) {
     this.modalContainer = modalContainer
     this.addEntryModal = addEntryModal
@@ -26,18 +31,23 @@ class EntryManager {
     this.addEntryForm = addEntryForm
     this.updateEntryModal = updateEntryModal
     this.updateEntryForm = updateEntryForm
+    this.deleteEntryModal = deleteEntryModal
+    this.confirmDeleteButton = confirmDeleteButton
     this.addNewEntry = null
     this.resetUpdating = null
     this.getUpdatingEntry = null
     this.updateEntryInEvent = null
     this.getCurrentDay = null
     this.updateEntryInData = null
+    this.resetDeleting = null
+    this.deleteEntryInData = null
   }
   public setEventListeners(): void {
     this.addEntryButton.addEventListener('click', this.showEntryModal.bind(this))
     this.modalContainer.addEventListener('click', this.cancelAllEntries.bind(this))
     this.addEntryForm.addEventListener('submit', this.handleNewEntry.bind(this))
     this.updateEntryForm.addEventListener('submit', this.handleUpdateEntry.bind(this))
+    this.confirmDeleteButton.addEventListener('click', this.handleDeleteEntry.bind(this))
   }
   public setCallbacks(
     addNewEntry: Function,
@@ -45,7 +55,9 @@ class EntryManager {
     getUpdatingEntry: Function,
     updateEntryInEvent: Function,
     getCurrentDay: Function,
-    updateEntryInData: Function
+    updateEntryInData: Function,
+    resetDeleting: Function,
+    deleteEntryInData: Function
   ): void {
     this.addNewEntry = addNewEntry
     this.resetUpdating = resetUpdating
@@ -53,6 +65,8 @@ class EntryManager {
     this.updateEntryInEvent = updateEntryInEvent
     this.getCurrentDay = getCurrentDay
     this.updateEntryInData = updateEntryInData
+    this.resetDeleting = resetDeleting
+    this.deleteEntryInData = deleteEntryInData
   }
   public fillUpdateModal(entry: Entry): void {
     const { day, time, description } = entry
@@ -94,6 +108,10 @@ class EntryManager {
     this.hideUpdateModal()
     event.target.reset()
   }
+  private handleDeleteEntry(): void {
+    this.deleteEntryInData()
+    this.hideDeleteModal()
+  }
   private showEntryModal(): void {
     this.showModalShadow()
     this.addEntryModal.classList.remove('hidden')
@@ -110,6 +128,14 @@ class EntryManager {
     this.hideModalShadow()
     this.updateEntryModal.classList.add('hidden')
   }
+  public showDeleteModal(): void {
+    this.showModalShadow()
+    this.deleteEntryModal.classList.remove('hidden')
+  }
+  private hideDeleteModal(): void {
+    this.hideModalShadow()
+    this.deleteEntryModal.classList.add('hidden')
+  }
   private showModalShadow(): void {
     this.modalContainer.classList.remove('hidden')
   }
@@ -117,7 +143,11 @@ class EntryManager {
     this.modalContainer.classList.add('hidden')
   }
   private cancelAllEntries(event: ClickEvent): void {
-    if(!event.target.classList.contains('modal-container')) return
+    if(
+      !event.target.classList.contains('modal-container') &&
+      event.target.className !== 'cancel-delete'
+    ) return
+    console.log('hit')
     if(!this.modalContainer.classList.contains('hidden')) {
       this.modalContainer.classList.add('hidden')
     }
@@ -129,5 +159,6 @@ class EntryManager {
     })
     this.updateEntryForm.reset()
     this.resetUpdating()
+    this.resetDeleting()
   }
 }
