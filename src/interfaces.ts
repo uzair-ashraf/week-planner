@@ -11,6 +11,11 @@ interface Entry {
   description: any
   row?: HTMLTableRowElement
 }
-interface Modals {
-  [key: string]: HTMLElement
+interface Data {
+  [key: string]: Entry[]
+}
+interface FormElements {
+  daySelect: HTMLSelectElement
+  timeSelect: HTMLSelectElement
+  textArea: HTMLTextAreaElement
 }

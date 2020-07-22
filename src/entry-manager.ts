@@ -1,19 +1,22 @@
 class EntryManager {
   modalContainer: HTMLElement
   addEntryModal: HTMLElement
-  addEntryForm: HTMLElement
-  addEntryButton: HTMLElement
+  addEntryForm: HTMLFormElement
+  addEntryButton: HTMLButtonElement
   updateEntryModal: HTMLElement
-  updateEntryForm: HTMLElement
+  updateEntryForm: any
   isShowingModal: boolean
+  resetUpdating: Function
   addNewEntry: Function
+  getUpdatingEntry: Function
+  updateEntry: Function
   constructor(
     modalContainer: HTMLElement,
     addEntryModal: HTMLElement,
-    addEntryButton: HTMLElement,
-    addEntryForm: HTMLElement,
+    addEntryButton: HTMLButtonElement,
+    addEntryForm: HTMLFormElement,
     updateEntryModal: HTMLElement,
-    updateEntryForm: HTMLElement
+    updateEntryForm: any
     ) {
     this.modalContainer = modalContainer
     this.addEntryModal = addEntryModal
@@ -21,14 +24,35 @@ class EntryManager {
     this.addEntryForm = addEntryForm
     this.updateEntryModal = updateEntryModal
     this.updateEntryForm = updateEntryForm
+    this.addNewEntry = null
+    this.resetUpdating = null
+    this.getUpdatingEntry = null
+    this.updateEntry = null
   }
   public setEventListeners(): void {
     this.addEntryButton.addEventListener('click', this.showEntryModal.bind(this))
     this.modalContainer.addEventListener('click', this.cancelAllEntries.bind(this))
     this.addEntryForm.addEventListener('submit', this.handleNewEntry.bind(this))
+    this.updateEntryForm.addEventListener('submit', this.handleUpdateEntry.bind(this))
   }
-  public setCallbacks(addNewEntry: Function): void {
+  public setCallbacks(
+    addNewEntry: Function,
+    resetUpdating: Function,
+    getUpdatingEntry: Function,
+    updateEntry: Function
+  ): void {
     this.addNewEntry = addNewEntry
+    this.resetUpdating = resetUpdating
+    this.getUpdatingEntry = getUpdatingEntry
+    this.updateEntry = updateEntry
+  }
+  public fillUpdateModal(entry: Entry): void {
+    const { day, time, description } = entry
+    // const elements: [HTMLSelectElement, HTMLSelectElement, HTMLButtonElement ,HTMLTextAreaElement]: this.updateEntryForm
+    const [daySelect, timeSelect, ,textArea] = this.updateEntryForm
+    daySelect.value = day
+    timeSelect.value = time
+    textArea.value = description
   }
   private handleNewEntry(event: SubmitEvent): void {
     event.preventDefault()
@@ -46,6 +70,24 @@ class EntryManager {
     this.hideEntryModal()
     event.target.reset()
   }
+  private handleUpdateEntry(event: SubmitEvent): void {
+    event.preventDefault()
+    const formData: FormData = new FormData(event.target)
+    const day: any = formData.get('day')
+    const time: any = formData.get('time')
+    const description: any = formData.get('description')
+    if (!day || !time || !description) return
+    const entry: Entry = this.getUpdatingEntry()
+    const newEntry: Entry = {
+      day,
+      time,
+      description
+    }
+    this.updateEntry(entry, newEntry)
+    this.hideUpdateModal()
+    event.target.reset()
+    this.resetUpdating()
+  }
   private showEntryModal(): void {
     this.showModalShadow()
     this.addEntryModal.classList.remove('hidden')
@@ -59,6 +101,7 @@ class EntryManager {
     this.updateEntryModal.classList.remove('hidden')
   }
   private hideUpdateModal(): void {
+    this.hideModalShadow()
     this.updateEntryModal.classList.add('hidden')
   }
   private showModalShadow(): void {
@@ -78,5 +121,7 @@ class EntryManager {
         element.classList.add('hidden')
       }
     })
+    this.updateEntryForm.reset()
+    this.resetUpdating()
   }
 }

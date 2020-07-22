@@ -1,20 +1,26 @@
 class DayManager {
   daysContainer: HTMLElement
   dayInHeading: HTMLElement
-  setCurrentDay: Function
+  changeCurrentDay: Function
+  updateEventContent: Function
   constructor(daysContainer: HTMLElement, daysInHeading: HTMLElement) {
     this.daysContainer = daysContainer
     this.dayInHeading = daysInHeading
-    this.setCurrentDay = null
+    this.changeCurrentDay = null
+    this.updateEventContent = null
   }
-  public setCallbacks(setCurrentDay: Function): void {
-    this.setCurrentDay = setCurrentDay
+  public setCallbacks(
+    changeCurrentDay: Function,
+    updateEventContent: Function
+  ): void {
+    this.changeCurrentDay = changeCurrentDay
+    this.updateEventContent = updateEventContent
   }
 
   public handleDaySelection(event: ClickEvent): void {
     if(!event.target.hasAttribute('data-day')) return
     const day: string = event.target.getAttribute('data-day')
-    this.setCurrentDay(day)
+    this.changeCurrentDay(day)
     this.setDayInHeading(day)
   }
   private setDayInHeading(day: string): void {

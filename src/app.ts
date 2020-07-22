@@ -1,5 +1,5 @@
 class App {
-  data: Array<Entry>
+  data: Data
   dayManager: DayManager
   currentDay: string
   entryManager: EntryManager
@@ -10,7 +10,7 @@ class App {
     entryManager: EntryManager,
     eventsManager: EventsManager
   ) {
-    this.data = []
+    this.data = null
     this.dayManager = dayManager
     this.entryManager = entryManager
     this.eventsManager = eventsManager
@@ -19,29 +19,62 @@ class App {
   }
   private getStorage(): void {
     const data: string = localStorage.getItem('data')
-    this.data = JSON.parse(data) || []
+    this.data = JSON.parse(data) || {
+      sunday: [],
+      monday: [],
+      tuesday: [],
+      wednesday: [],
+      thursday: [],
+      friday: [],
+      saturday: []
+    }
   }
-  private setCurrentDay(day: string): void {
+  private changeCurrentDay(day: string): void {
     this.currentDay = day
+    this.eventsManager.updateEvents()
+  }
+  private getCurrentDay(): string {
+    return this.currentDay
   }
   private setCallbacks():void {
-    this.dayManager.setCallbacks(this.setCurrentDay.bind(this))
-    this.entryManager.setCallbacks(this.addNewEntry.bind(this))
-    this.eventsManager.setCallbacks(this.setUpdating.bind(this))
+    this.dayManager.setCallbacks(
+      this.changeCurrentDay.bind(this),
+      this.eventsManager.updateEvents.bind(this)
+    )
+    this.entryManager.setCallbacks(
+      this.addNewEntry.bind(this),
+      this.resetUpdating.bind(this),
+      this.getUpdatingEntry.bind(this),
+      this.eventsManager.updateEntry.bind(this)
+    )
+    this.eventsManager.setCallbacks(
+      this.setUpdating.bind(this),
+      this.getCurrentDay.bind(this),
+      this.getCurrentEvents.bind(this)
+    )
   }
   private addNewEntry(entry: Entry): void {
     this.eventsManager.addNewEntry(entry)
-    this.data.push(entry)
+    this.data[entry.day].push(entry)
   }
   private setEventListeners(): void {
     this.dayManager.setEventListeners()
     this.entryManager.setEventListeners()
   }
   private setUpdating(row: HTMLTableRowElement): void {
-    console.log(row)
-    const updatingEntry: Entry = this.data.find(entry => entry.row === row)
+    const updatingEntry: Entry = this.data[this.currentDay].find(entry => entry.row === row)
     this.updating = updatingEntry
+    this.entryManager.fillUpdateModal(updatingEntry)
     this.entryManager.showUpdateModal()
+  }
+  private resetUpdating(): void {
+    this.updating = null
+  }
+  private getUpdatingEntry(): Entry {
+    return this.updating
+  }
+  private getCurrentEvents(): Entry[] {
+    return this.data[this.currentDay]
   }
   public start():void {
     this.getStorage()
