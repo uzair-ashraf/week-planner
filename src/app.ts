@@ -31,6 +31,9 @@ class App {
       saturday: []
     }
   }
+  private updateStorage(): void {
+    localStorage.setItem('data', JSON.stringify(this.data))
+  }
   private changeCurrentDay(day: string): void {
     this.currentDay = day
     this.eventsManager.updateEvents()
@@ -64,6 +67,7 @@ class App {
     this.eventsManager.addNewEntry(entry)
     this.data[entry.day].push(entry)
     this.dayManager.updateDayCounter(this.data)
+    this.updateStorage()
   }
   private setEventListeners(): void {
     this.dayManager.setEventListeners()
@@ -102,6 +106,7 @@ class App {
       this.eventsManager.updateEntryInEvent(this.updating)
       this.resetUpdating()
     }
+    this.updateStorage()
   }
   private deleteEntryInData() {
     const entryIndex: number = this.data[this.currentDay].findIndex(entry => entry.row === this.deleting.row)
@@ -109,6 +114,7 @@ class App {
     this.eventsManager.deleteEntryInEvent(this.deleting)
     this.dayManager.updateDayCounter(this.data)
     this.resetDeleting()
+    this.updateStorage()
   }
   private getCurrentEvents(): Entry[] {
     return this.data[this.currentDay]
@@ -117,5 +123,7 @@ class App {
     this.getStorage()
     this.setCallbacks()
     this.setEventListeners()
+    this.eventsManager.updateEvents()
+    this.dayManager.updateDayCounter(this.data)
   }
 }
