@@ -63,6 +63,7 @@ class App {
   private addNewEntry(entry: Entry): void {
     this.eventsManager.addNewEntry(entry)
     this.data[entry.day].push(entry)
+    this.dayManager.updateDayCounter(this.data)
   }
   private setEventListeners(): void {
     this.dayManager.setEventListeners()
@@ -94,6 +95,7 @@ class App {
       this.data[this.currentDay].splice(entryIndex, 1)
       this.data[newEntry.day].push(newEntry)
       this.eventsManager.updateEvents()
+      this.dayManager.updateDayCounter(this.data)
     } else {
       this.updating.time = newEntry.time
       this.updating.description = newEntry.description
@@ -105,6 +107,7 @@ class App {
     const entryIndex: number = this.data[this.currentDay].findIndex(entry => entry.row === this.deleting.row)
     this.data[this.currentDay].splice(entryIndex, 1)
     this.eventsManager.deleteEntryInEvent(this.deleting)
+    this.dayManager.updateDayCounter(this.data)
     this.resetDeleting()
   }
   private getCurrentEvents(): Entry[] {

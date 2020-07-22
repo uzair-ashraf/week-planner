@@ -1,7 +1,7 @@
 class EventsManager {
   tableContent: HTMLElement
   setUpdating: Function
-  setDeleting: Funciton
+  setDeleting: Function
   getCurrentDay: Function
   getCurrentEvents: Function
   constructor(tableContent: HTMLElement) {

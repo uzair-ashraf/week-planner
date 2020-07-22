@@ -49,6 +49,13 @@ textarea {
   font-weight: bolder;
   font-size: 1.6rem;
   margin: 1.2rem;
+  position: relative;
+}
+.counter {
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+  font-size: 1rem;
 }
 
 .action-container {

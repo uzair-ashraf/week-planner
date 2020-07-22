@@ -16,7 +16,15 @@ class DayManager {
     this.changeCurrentDay = changeCurrentDay
     this.updateEventContent = updateEventContent
   }
-
+  public updateDayCounter(entries: Data): void {
+    let dayElementIndex: number = 0
+    for(const day in entries) {
+      const count: number = entries[day].length
+      const counterElement: Element = this.daysContainer.children[dayElementIndex].lastElementChild
+      counterElement.textContent = count.toString()
+      dayElementIndex++
+    }
+  }
   public handleDaySelection(event: ClickEvent): void {
     if(!event.target.hasAttribute('data-day')) return
     const day: string = event.target.getAttribute('data-day')
